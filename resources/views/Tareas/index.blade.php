@@ -5,13 +5,19 @@
 
 
 <div class="row">
+  <div class="col">
+      <h1 class="text-center">Agenda</h1>
+  </div>
+</div>
+
+<div class="row">
 
 
-        <a class="btn btn-primary" href="{{ url('tareas/create') }}">
-            Nuevo
-        </a>
+<div class="col"><h1>Tareas pendientes</h1></div>
 
-<h1>Tareas pendientes</h1>
+<div class="col-2"><a class="btn btn-primary float-rigth" href="{{ url('tareas/create') }}">
+  Nuevo
+</a></div>
       <table class="table">
     <thead>
       <tr>
@@ -23,16 +29,20 @@
     </thead>
     <tbody>
 
-    @foreach ($list_tar  as $tar)
+    @foreach ($list_tar  as $tar)   
       <tr>
         <td>{{$tar->name}}</td>
         <td>{{$tar->created_at}}</td>
         <td>
-          <label><input type="checkbox" id="myCheck" name="myCheck" onclick="getCheckedCheckboxesFor('myCheck')" value="{{$tar->id}}"></label><br>
+        <form action="{{ url('tareas/' . $tar->id) }}" method="post">
+            @csrf
+            @method('PUT')            
+            <button style="background-color: transparent; border:none" type="submit" >
+              <input type="checkbox" id="c" name="check" value="1">
+            </button>
+        </form>
+
         </td>  
-        <td>
-          <p id="text" style="display:none">Checkbox is CHECKED!</p>
-        </td>      
         <td>                        
           <form action="{{ route('tareas.destroy', [$tar->id]) }}" method="post">
               @csrf
@@ -53,49 +63,25 @@
   </table>
 
 
-
+<div class="row">
     <h1>Tareas realizadas</h1>
       <table class="table">
     <thead>
       <tr>
         <th scope="col">Nombre</th>
         <th scope="col">Fecha</th>
-        <th scope="col">Hecho</th>
-        <th scope="col">Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
+      @foreach ($list_eco  as $eco)   
+        <tr>
+          <td>{{$eco->name}}</td>
+          <td>{{$eco->created_at}}</td>
+        </tr>
+      @endforeach
+
     </tbody>
   </table>
-  </div>
-  <script> 
-  var hecho;
-function getCheckedCheckboxesFor(checkboxName) {
-    var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
-    Array.prototype.forEach.call(checkboxes, function(el) {
-        values.push(el.value); 
-        hecho = values;
-    });
-}
-  console.log(hecho);
-  </script>
+</div>
 @endsection
  

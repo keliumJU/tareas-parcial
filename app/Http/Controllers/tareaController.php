@@ -14,8 +14,9 @@ class tareaController extends Controller
      */
     public function index()
     {
-        $list_tar = tarea::all();
-        return view("Tareas.index", compact('list_tar'));
+        $list_tar = tarea::where("confirmed","=",0)->get();
+        $list_eco = tarea::where("confirmed","=",1)->get();
+        return view("Tareas.index", compact('list_tar', 'list_eco'));
     }
 
     /**
@@ -36,9 +37,12 @@ class tareaController extends Controller
      */
     public function store(Request $request)
     {
+        $validateData = $request->validate([
+            'name' => 'required|max: 100'
+        ]);
+
         $tar = new tarea();
         $tar->name = $request->input('name');
-        $tar->confirmed = 0;
         $tar->save();
         return redirect('/tareas');  
     }
@@ -75,15 +79,22 @@ class tareaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        /*
+        corregir aqui
+        $validateData = $request->validate([
+            'name' => 'required|max: 100'
+        ]);*/
+
         $tar=tarea::where('id', $id)->first();
- 
-        // Si existe
-           // Seteamos un nuevo titulo
-           $tar->name = $request->input('name');
-           $tar->confirmed = $request->input('check');
-        
-           // Guardamos en base de datos
-           $tar->save();
+
+        if($request->input('name') != null){                   
+            $tar->name = $request->input('name');
+        }else{
+            $tar->confirmed = 1;
+        }
+
+        $tar->save();
+
         return redirect('/tareas');
     }
 

@@ -16,10 +16,10 @@ class CreateTareasTable extends Migration
         Schema::create('tareas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->boolean('confirmed');
+            $table->boolean('confirmed')->default(0);
             $table->timestamps();
         });
-    }
+    }   
 
     /**
      * Reverse the migrations.
