@@ -6,25 +6,24 @@
 
 <div class="row">
   <div class="col">
-      <h1 class="text-center">Agenda</h1>
+      <h1 class="text-center">Categorias</h1>
   </div>
 </div>
 
 <div class="row">
 
 
-<div class="col"><h1>Tareas pendientes</h1></div>
+<div class="col"><h1>Lista de categorias</h1></div>
 
 <div class="col-2"><a class="btn btn-primary float-rigth" href="{{ url('tareas/create') }}">
-  Nuevo
+    Nueva
+  
 </a></div>
       <table class="table">
     <thead>
       <tr>
+        <th scope="col">id</th>    
         <th scope="col">Nombre</th>
-        <th scope="col">Categoria</th>
-        <th scope="col">Fecha</th>
-        <th scope="col">Hecho</th>
         <th scope="col">Acciones</th>
       </tr>
     </thead>
@@ -33,7 +32,6 @@
     @foreach ($list_tar  as $tar)   
       <tr>
         <td>{{$tar->name}}</td>
-        <td>{{$tar->cate}}</td>
         <td>{{$tar->created_at}}</td>
         <td>
         <form action="{{ url('tareas/' . $tar->id) }}" method="post">

@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::resource('tareas', 'tareaController');
+Route::resource('categorias', 'categoriaController');

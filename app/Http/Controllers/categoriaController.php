@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\tarea;
 use App\categoria;
-class tareaController extends Controller
+class categoriaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +13,8 @@ class tareaController extends Controller
      */
     public function index()
     {
-
-        $list_tar = DB::table('tareas')
-            ->join('categorias', 'tareas.categorias_id', '=', 'categorias.id')
-            ->select('tareas.*', 'categorias.name as cate')
-            ->where("tareas.confirmed", "=", 0)
-            ->get();
-
-        #$list_tar = tarea::where("confirmed","=",0)->get();
-        $list_eco = tarea::where("confirmed","=",1)->get();
-        return view("Tareas.index", compact('list_tar', 'list_eco'));
+        return "Coming soon";
+        
     }
 
     /**
@@ -34,9 +24,7 @@ class tareaController extends Controller
      */
     public function create()
     {
-        $items = categoria::all();
-        
-        return view('Tareas.create', compact('items'));
+        return view('Categorias.create');
     }
 
     /**
@@ -51,11 +39,10 @@ class tareaController extends Controller
             'name' => 'required|max: 100'
         ]);
 
-        $tar = new tarea();
+        $tar = new categoria();
         $tar->name = $request->input('name');
-        $tar->categorias_id = $request->input('categori');
         $tar->save();
-        return redirect('/tareas');  
+        return redirect('/categorias');  
     }
 
     /**
@@ -77,8 +64,7 @@ class tareaController extends Controller
      */
     public function edit($id)
     {
-        $tarea = tarea::find($id);
-        return view('Tareas.editar_tareas', ['tarea' => $tarea]);
+        //
     }
 
     /**
@@ -90,24 +76,7 @@ class tareaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /*
-        corregir aqui
-        $validateData = $request->validate([
-            'name' => 'required|max: 100'
-        ]);*/
-
-        $tar=tarea::where('id', $id)->first();
-
-        if($request->input('name') != null){                   
-            $tar->name = $request->input('name');
-            $tar->categorias_id = $request->input('categori');
-        }else{
-            $tar->confirmed = 1;
-        }
-
-        $tar->save();
-
-        return redirect('/tareas');
+        //
     }
 
     /**
@@ -118,7 +87,6 @@ class tareaController extends Controller
      */
     public function destroy($id)
     {
-        tarea::destroy($id);
-        return redirect('/tareas');
+        //
     }
 }
