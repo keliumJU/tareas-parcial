@@ -16,7 +16,7 @@
 @endif
 
 
-<h1>Crear nueva tarea</h1>
+<h1 class="mt-5">Crear nueva tarea</h1>
 <form action="/tareas" method="POST">
  @csrf
   <div class="form-group">

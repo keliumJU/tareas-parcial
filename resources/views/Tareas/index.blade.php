@@ -5,17 +5,8 @@
 
 
 <div class="row">
-  <div class="col">
-      <h1 class="text-center">Agenda</h1>
-  </div>
-</div>
-
-<div class="row">
-
-
-<div class="col"><h1>Tareas pendientes</h1></div>
-
-<div class="col-2"><a class="btn btn-primary float-rigth" href="{{ url('tareas/create') }}">
+<div class="col"><h1 class="mt-5">Tareas pendientes</h1></div>
+<div class="col-2 m"><a class="btn btn-primary float-rigth mt-5" href="{{ url('tareas/create') }}">
   Nuevo
 </a></div>
       <table class="table">
@@ -65,12 +56,13 @@
   </table>
 
 
-<div class="row">
+<div class="row mt-5">
     <h1>Tareas realizadas</h1>
       <table class="table">
     <thead>
       <tr>
         <th scope="col">Nombre</th>
+        <th scope="col">Categoria</th>
         <th scope="col">Fecha</th>
       </tr>
     </thead>
@@ -78,6 +70,7 @@
       @foreach ($list_eco  as $eco)   
         <tr>
           <td>{{$eco->name}}</td>
+          <td>{{$eco->cate}}</td>
           <td>{{$eco->created_at}}</td>
         </tr>
       @endforeach

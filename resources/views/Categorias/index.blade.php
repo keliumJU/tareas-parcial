@@ -15,10 +15,11 @@
 
 <div class="col"><h1>Lista de categorias</h1></div>
 
-<div class="col-2"><a class="btn btn-primary float-rigth" href="{{ url('tareas/create') }}">
+<div class="col-2"><a class="btn btn-primary float-rigth" href="{{ url('categorias/create') }}">
     Nueva
   
-</a></div>
+</a>
+</div>
       <table class="table">
     <thead>
       <tr>
@@ -29,26 +30,16 @@
     </thead>
     <tbody>
 
-    @foreach ($list_tar  as $tar)   
+    @foreach ($categorias  as $categoria)   
       <tr>
-        <td>{{$tar->name}}</td>
-        <td>{{$tar->created_at}}</td>
-        <td>
-        <form action="{{ url('tareas/' . $tar->id) }}" method="post">
-            @csrf
-            @method('PUT')            
-            <button style="background-color: transparent; border:none" type="submit" >
-              <input type="checkbox" id="c" name="check" value="1">
-            </button>
-        </form>
-
-        </td>  
+        <td>{{$categoria->id}}</td>
+        <td>{{$categoria->name}}</td>
         <td>                        
-          <form action="{{ route('tareas.destroy', [$tar->id]) }}" method="post">
+          <form action="{{ route('categorias.destroy', [$categoria->id]) }}" method="post">
               @csrf
               @method('DELETE')
               <a class="btn btn-success" 
-                  href="{{ route('tareas.edit', [$tar->id]) }}">
+                  href="{{ route('categorias.edit', [$categoria->id]) }}">
                   <i class="fa fa-pencil"></i>
               </a>
 
@@ -62,26 +53,5 @@
     </tbody>
   </table>
 
-
-<div class="row">
-    <h1>Tareas realizadas</h1>
-      <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Fecha</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach ($list_eco  as $eco)   
-        <tr>
-          <td>{{$eco->name}}</td>
-          <td>{{$eco->created_at}}</td>
-        </tr>
-      @endforeach
-
-    </tbody>
-  </table>
-</div>
 @endsection
  

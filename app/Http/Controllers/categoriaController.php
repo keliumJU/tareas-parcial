@@ -13,7 +13,8 @@ class categoriaController extends Controller
      */
     public function index()
     {
-        return "Coming soon";
+        $categorias = categoria::all();
+        return view('Categorias.index', compact('categorias'));
         
     }
 
@@ -38,10 +39,9 @@ class categoriaController extends Controller
         $validateData = $request->validate([
             'name' => 'required|max: 100'
         ]);
-
-        $tar = new categoria();
-        $tar->name = $request->input('name');
-        $tar->save();
+        $cate = new categoria();
+        $cate->name = $request->input('name');
+        $cate->save();
         return redirect('/categorias');  
     }
 
@@ -64,7 +64,9 @@ class categoriaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categoria = categoria::find($id);
+        #clave valor clave 'categoria' valor $categoria
+        return view('Categorias.editar_categoria', ['categoria' => $categoria]);
     }
 
     /**
@@ -76,7 +78,17 @@ class categoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /*
+        corregir aqui
+        $validateData = $request->validate([
+            'name' => 'required|max: 100'
+        ]);*/
+
+        $cate=categoria::where('id', $id)->first();
+        $cate->name = $request->input('name');
+        $cate->save();
+
+        return redirect('/categorias');
     }
 
     /**
@@ -87,6 +99,7 @@ class categoriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        categoria::destroy($id);
+        return redirect('/categorias');
     }
 }

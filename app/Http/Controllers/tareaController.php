@@ -22,8 +22,12 @@ class tareaController extends Controller
             ->where("tareas.confirmed", "=", 0)
             ->get();
 
-        #$list_tar = tarea::where("confirmed","=",0)->get();
-        $list_eco = tarea::where("confirmed","=",1)->get();
+        $list_eco = DB::table('tareas')
+            ->join('categorias', 'tareas.categorias_id', '=', 'categorias.id')
+            ->select('tareas.*', 'categorias.name as cate')
+            ->where("tareas.confirmed", "=", 1)
+            ->get();
+
         return view("Tareas.index", compact('list_tar', 'list_eco'));
     }
 
@@ -77,8 +81,18 @@ class tareaController extends Controller
      */
     public function edit($id)
     {
+        //Reducir con funcion
+        #Hacer que aparesca la actual en el select, imposible?
+        $categoria_current = DB::table('tareas')
+        ->join('categorias', 'tareas.categorias_id', '=', 'categorias.id')
+        ->select('tareas.*', 'categorias.name as cate')
+        ->where("tareas.id", $id)
+        ->get();
+
+        $categorias = categoria::all();
         $tarea = tarea::find($id);
-        return view('Tareas.editar_tareas', ['tarea' => $tarea]);
+
+        return view('Tareas.editar_tareas', ['tarea' => $tarea, 'categorias'=>$categorias]);
     }
 
     /**
